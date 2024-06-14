@@ -23,6 +23,27 @@ public class BookManager {
         }
         return null; // 검색 결과가 없는 경우 null 반환
     }
+    
+    public Book search_bs(String id) {
+        int left = 0;
+        int right = books.size() - 1;
+
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            Book midBook = books.get(mid);
+            int compare = midBook.getId().compareTo(id);
+
+            if (compare == 0) {
+                return midBook; // id가 일치하는 경우
+            } else if (compare < 0) {
+                left = mid + 1; // id가 더 큰 경우 오른쪽 탐색
+            } else {
+                right = mid - 1; // id가 더 작은 경우 왼쪽 탐색
+            }
+        }
+
+        return null; // id가 없는 경우 null 반환
+    }
 
     public String removeBook(String id) {
         for (int i = 0; i < books.size(); i++) {
