@@ -73,6 +73,43 @@ public class BookManagerTest {
         
         assertNull(book);
     }
+    
+    @Test
+    public void testSearchBookBinarySearch() {
+        bookManager.addBook("1", "자바기초", "Jane", 2021);
+        bookManager.addBook("2", "소프트웨어 공학", "Tom", 2014);
+        bookManager.addBook("3", "분산 컴퓨팅", "Yoon", 2024);
+
+        Book book1 = bookManager.search_bs("1");
+        Book book2 = bookManager.search_bs("2");
+        Book book3 = bookManager.search_bs("3");
+
+        System.out.println("이진 검색 결과");
+        System.out.println(book1.getId() + book1.getTitle());
+        System.out.println("이진 검색 결과");
+        System.out.println(book2.getId() + book2.getTitle());
+        System.out.println("이진 검색 결과");
+        System.out.println(book3.getId() + book3.getTitle());
+
+        assertNotNull(book1);
+        assertEquals("자바기초", book1.getTitle());
+
+        assertNotNull(book2);
+        assertEquals("소프트웨어 공학", book2.getTitle());
+
+        assertNotNull(book3);
+        assertEquals("분산 컴퓨팅", book3.getTitle());
+    }
+
+    @Test
+    public void testSearchNonExistingBookBinarySearch() {
+        Book book = bookManager.search_bs("4");
+
+        System.out.println("이진 검색 결과: ");
+        System.out.println(book);
+
+        assertNull(book);
+    }
 
     @Test
     public void testRemoveBook() {
