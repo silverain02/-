@@ -1,8 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class BookManager {
     private List<Book> books = new ArrayList<>();
+    private boolean sorted = false; // 정렬 상태를 저장할 변수
 
     public String addBook(String id, String title, String author, int year) {
         for (int i = 0; i < books.size(); i++) {
@@ -25,6 +28,12 @@ public class BookManager {
     }
     
     public Book search_bs(String id) {
+       
+        if (!sorted) {
+             sortBooks(); // 정렬되지 않은 경우에만 정렬
+             sorted = true; // 정렬된 상태로 표시
+         }
+       
         int left = 0;
         int right = books.size() - 1;
 
@@ -53,5 +62,10 @@ public class BookManager {
             }
         }
         return "해당 id(" + id + ")를 가진 도서가 없습니다.";
+    }
+    
+    private void sortBooks() {
+        // ID를 기준으로 정렬 (binarySearch 전에 정렬)
+        Collections.sort(books, Comparator.comparing(Book::getId));
     }
 }
