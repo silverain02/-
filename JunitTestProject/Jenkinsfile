@@ -2,25 +2,25 @@ pipeline {
 	agent any
 	stages {
  		stage('Checkout') {
- 	steps {
- 		// 소스코드 체크아웃
- 		checkout scm
- 		}
- 	}
- 	stage('Build') {
- 		steps {
-		 	// Java 파일들을 컴파일하여 생성된 클래스 파일을 classes 디렉토리에 저장
-			// window 일 경우 bat
- 			bat 'javac -encoding UTF-8 -d classes JunitTestProject/src/*.java'
- 		}
- 	}
- 	stage('Test') {
- 		steps {
- 			// JUnit 5 테스트 실행을 위한 classpath 설정
- 			def classpath = "classes;lib/;path/to/eclipse/plugins/junit-platform-console-standalone-1.7.1.jar"  
- 			// JUnit 5 테스트 실행
- 			bat 'java -cp classes;lib/; path/to/eclipse/plugins/junit-platform-console-standalone-1.7.1.jar org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt' 
+ 			steps {
+ 			// 소스코드 체크아웃
+ 			checkout scm
  			}
+ 		}
+ 		stage('Build') {
+ 			steps {
+		 		// Java 파일들을 컴파일하여 생성된 클래스 파일을 classes 디렉토리에 저장
+				// window 일 경우 bat
+ 				bat 'javac -encoding UTF-8 -d classes JunitTestProject/src/*.java'
+ 				}
+ 		}
+ 		stage('Test') {
+ 			steps {
+ 				// JUnit 5 테스트 실행을 위한 classpath 설정
+ 				// def classpath = "classes;lib/;path/to/eclipse/plugins/junit-platform-console-standalone-1.7.1.jar"  
+ 				// JUnit 5 테스트 실행
+ 				bat 'java -cp classes;lib/; path/to/eclipse/plugins/junit-platform-console-standalone-1.7.1.jar org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt' 
+ 				}
  		}
 	} 
 	post {
@@ -35,4 +35,4 @@ pipeline {
 			echo 'Build and test succeeded'
 		}
 	}
-	}
+}
