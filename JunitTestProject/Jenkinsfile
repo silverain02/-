@@ -19,7 +19,7 @@ pipeline {
                 // JUnit 5 테스트 실행을 위한 classpath 설정 및 테스트 실행
                 
                 script{
-                 	def classpath = "JunitTestProject/lib/junit-platform-console-standalone-1.7.1.jar/"
+                 	def classpath = "JunitTestProject/lib/junit-platform-console-standalone-1.7.1.jar"
                  	//JunitTest실행
                     bat 'java -Dfile.encoding=UTF-8 -cp ${classpath} org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt'
                     
