@@ -21,7 +21,7 @@ pipeline {
                 script{
                  	def classpath = "JunitTestProject/lib/junit-platform-console-standalone-1.7.1.jar"
                  	//JunitTest실행
-                    bat 'java -Dfile.encoding=UTF-8 -cp ${classpath} org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt'
+                    bat 'java -cp JunitTestProject/lib/junit-platform-console-standalone-1.7.1.jar org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt'
                     
                 }
               		
