@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        TEST_RESULTS_DIR = "test-results"
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -22,18 +25,19 @@ pipeline {
                 script{
                  	def classpath = "JunitTestProject/lib/junit-platform-console-standalone-1.7.1.jar"
                  	//JunitTest실행
-                 	bat "mkdir -p test_result"
-                    bat 'java -cp {classpath} org.junit.platform.console.ConsoleLauncher --scan-classpath -classpath=classes > test_result/test_results.txt'
-                    bat "cat test_result/test_results.txt"
+                 	bat "mkdir -p ${TEST_RESULTS_DIR}"
+                    bat 'java -cp {classpath} org.junit.platform.console.ConsoleLauncher --scan-classpath --classpath=classes > ${TEST_RESULTS_DIR}/test_results.txt'
+                    bat "type ${TEST_RESULTS_DIR}\\test_results.txt"
                 }
-              		
+                
+              	
              }
         }
     }
     post {
         always {
             // 테스트 결과 파일을 저장하기 위해 아카이브
-            archiveArtifacts "test_result/*"
+            archiveArtifacts "${TEST_RESULTS_DIR}/*"
         }
         failure {
             echo 'Build or test failed'
