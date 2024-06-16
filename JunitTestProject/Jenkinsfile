@@ -14,6 +14,7 @@ pipeline {
                 bat 'javac -encoding UTF-8 -cp "JunitTestProject/lib/*" -d classes JunitTestProject/src/*.java'
             }
         }
+        
         stage('Test') {
             steps {
                 // JUnit 5 테스트 실행을 위한 classpath 설정 및 테스트 실행
