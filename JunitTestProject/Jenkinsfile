@@ -9,14 +9,9 @@ pipeline {
         }
         stage('Build') {
             steps {
-                script {
-                    // lib 디렉토리 내 모든 JAR 파일을 classpath에 추가
-                    def libJars = sh(script: 'echo lib/*.jar', returnStdout: true).trim()
-                    def classpath = "classes:${libJars}"
-                    
-                    // Java 파일들을 컴파일하여 생성된 클래스 파일을 classes 디렉토리에 저장
-                    bat "javac -encoding UTF-8 -cp ${classpath} -d classes JunitTestProject/src/*.java"
-                }
+                // Java 파일들을 컴파일하여 생성된 클래스 파일을 classes 디렉토리에 저장
+                // Windows 일 경우 bat
+                bat 'javac -encoding UTF-8 -cp lib/* -d classes JunitTestProject/src/*.java'
             }
         }
         stage('Test') {
