@@ -11,7 +11,6 @@ pipeline {
             steps {
                 // Java 파일들을 컴파일하여 생성된 클래스 파일을 classes 디렉토리에 저장
                 // Windows 일 경우 bat
-                bat 'mkdir -p classes'
                 bat 'javac -encoding UTF-8 -cp "JunitTestProject/lib/*" -d classes JunitTestProject/src/*.java'
             }
         }
@@ -22,9 +21,8 @@ pipeline {
                 script{
                  	def classpath = "JunitTestProject/lib/junit-platform-console-standalone-1.7.1.jar"
                  	//JunitTest실행
-                 	bat "mkdir -p test_result"
-                    bat 'java -cp {classpath} org.junit.platform.console.ConsoleLauncher --scan-classpath --classpath=classes > test_result/test_results.txt'
-                    bat "cat test_result/test_results.txt"
+                    bat 'java -cp {classpath} org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt'
+                    
                 }
               		
              }
@@ -33,7 +31,7 @@ pipeline {
     post {
         always {
             // 테스트 결과 파일을 저장하기 위해 아카이브
-            archiveArtifacts "test_result/*"
+            archiveArtifacts artifacts: 'test_results.txt'
         }
         failure {
             echo 'Build or test failed'
